@@ -13,6 +13,7 @@ Until Now we have created routing logic, Sample Screens as per the flow. Below y
 <img src="./screenshots/4.png" width="240" style="padding: 4px"/> 
 <img src="./screenshots/5.png" width="240" style="padding: 4px"/> 
 <img src="./screenshots/6.png" width="240" style="padding: 4px"/> 
+<img src="./screenshots/7.png" width="240" style="padding: 4px"/> 
 </p>
 
 **_More Commits will be added eventually with more features and screenshots._**
