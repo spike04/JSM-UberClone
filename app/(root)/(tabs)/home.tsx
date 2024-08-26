@@ -15,6 +15,7 @@ import {
 } from 'react-native'
 import * as Location from 'expo-location'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import { router } from 'expo-router'
 
 const recentRides = [
   {
@@ -132,7 +133,15 @@ export default function Page() {
 
   const handleSignOut = async () => {}
 
-  const handleDestinationPressed = () => {}
+  const handleDestinationPressed = (location: {
+    latitude: number
+    longitude: number
+    address: string
+  }) => {
+    setDestinationLocation(location)
+
+    router.push('/(root)/find-ride')
+  }
 
   useEffect(() => {
     const requestLocation = async () => {
@@ -206,12 +215,12 @@ export default function Page() {
 
             <GoogleTextInput
               icon={icons.search}
-              containerStyle="bg-white shadow-md shadow-neutral-300"
+              containerStyle="bg-white shadow shadow-neutral-300"
               handlePress={handleDestinationPressed}
             />
 
             <>
-              <Text className="text-xl font-JakartaBold mt-5 mb-3">
+              <Text className="text-xl font-JakartaBold mb-3">
                 Your current location
               </Text>
               <View className="flex flex-row items-center bg-transparent h-[300px]">
