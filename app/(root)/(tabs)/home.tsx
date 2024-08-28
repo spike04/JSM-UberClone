@@ -2,8 +2,12 @@ import GoogleTextInput from '@/components/GoogleTextInput'
 import Map from '@/components/Map'
 import RideCard from '@/components/RideCard'
 import { icons, images } from '@/constants'
+import { useFetch } from '@/lib/fetch'
 import { useLocationStore } from '@/store'
-import { useUser } from '@clerk/clerk-expo'
+import { Ride } from '@/types/type'
+import { useAuth, useUser } from '@clerk/clerk-expo'
+import * as Location from 'expo-location'
+import { router } from 'expo-router'
 import { useEffect, useState } from 'react'
 import {
   ActivityIndicator,
@@ -13,22 +17,22 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native'
-import * as Location from 'expo-location'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { router } from 'expo-router'
-import { useFetch } from '@/lib/fetch'
-import { Ride } from '@/types/type'
 
 export default function Page() {
+  const { signOut } = useAuth()
   const { setUserLocation, setDestinationLocation } = useLocationStore()
   const { user } = useUser()
   const { data: recentRides, loading } = useFetch<Ride[]>(
     `/(api)/ride/${user?.id}`,
   )
 
-  const [hasPermissions, setHasPermissions] = useState(false)
+  const [, setHasPermissions] = useState(false)
 
-  const handleSignOut = async () => {}
+  const handleSignOut = async () => {
+    signOut()
+    router.replace('/(auth)/sign-in')
+  }
 
   const handleDestinationPressed = (location: {
     latitude: number
@@ -64,7 +68,7 @@ export default function Page() {
     }
 
     requestLocation()
-  }, [])
+  }, [setUserLocation])
 
   return (
     <SafeAreaView className="bg-general-500">
